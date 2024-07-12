@@ -1,0 +1,8 @@
+{
+    "register": {
+        "host": "192.168.3.100",
+        "port": 34869
+    },
+    "service_list_ttl": 1,
+    "max_tries": 3
+}

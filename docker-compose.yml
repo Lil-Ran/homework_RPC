@@ -1,0 +1,64 @@
+networks:
+  rpc_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.3.0/24
+
+services:
+  register_center:
+    build: register-center
+    # ports:
+    #   - "34869:34869"
+    # 容器之间的通信，不需要暴露端口到宿主机
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.100
+
+  server1:
+    build: server
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.11
+  
+  server2:
+    build: server
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.12
+
+  server3:
+    build: server
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.13
+
+  client1:
+    build: client
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.21
+  
+  client2:
+    build: client
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.22
+
+  client3:
+    build: client
+    depends_on:
+      - register_center
+    networks:
+      rpc_network:
+        ipv4_address: 192.168.3.23
